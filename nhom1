@@ -1,0 +1,125 @@
+1.Summarization Utilities
+from pyspark.sql import SparkSession
+
+# Khởi tạo SparkSession
+spark = SparkSession.builder.appName("Spark DataFrame Summary").getOrCreate()
+
+# Tạo DataFrame từ dữ liệu
+df = spark.createDataFrame([(1, "A"), (2, "B"), (3, "C")], ["id", "name"])
+
+# Tóm tắt DataFrame
+summary = df.summary()
+
+# Hiển thị kết quả tóm tắt
+summary.show()
+Câu lệnh: python
+Mô tả: Câu lệnh này được sử dụng để mở Python trong Terminal trên Ubuntu. Khi bạn nhập câu lệnh này và nhấn Enter, bạn sẽ được chuyển đến môi trường Python để thực thi mã Python.
+Câu lệnh: from pyspark.sql import SparkSession
+Mô tả: Câu lệnh này được sử dụng để import lớp SparkSession từ module pyspark.sql. SparkSession là một phiên Spark, cung cấp một cách tiện lợi để làm việc với dữ liệu trong Spark.
+Câu lệnh: spark = SparkSession.builder.appName("Spark DataFrame Summary").getOrCreate()
+Mô tả: Câu lệnh này tạo một đối tượng SparkSession với tên ứng dụng là "Spark DataFrame Summary". Nếu một phiên Spark đã tồn tại, nó sẽ được sử dụng; nếu không, một phiên mới sẽ được tạo.
+Câu lệnh: df = spark.createDataFrame([(1, "A"), (2, "B"), (3, "C")], ["id", "name"])
+Mô tả: Câu lệnh này tạo một DataFrame từ một danh sách các bộ dữ liệu và một danh sách các tên cột. Trong ví dụ này, DataFrame có 2 cột là "id" và "name" và chứa các bộ dữ liệu (1, "A"), (2, "B"), (3, "C").
+Câu lệnh: summary = df.summary()
+Mô tả: Câu lệnh này thực hiện tóm tắt của DataFrame df bằng cách gọi phương thức summary(). Kết quả tóm tắt được lưu trong biến summary.
+Câu lệnh: summary.show()
+Mô tả: Câu lệnh này hiển thị kết quả tóm tắt của DataFrame được lưu trong biến summary. Kết quả sẽ được hiển thị trên Terminal.
+
+2.Feature Extraction Utilities
+ đầu tiên sử dụng câu lệnh: from pyspark.ml.feature import VectorAssembler
+Sử dụng lệnh sau để import SparkSession từ PySpark: from pyspark.sql import SparkSession
+Tạo một đối tượng SparkSession: spark = SparkSession.builder.appName("Spark Feature Extraction").getOrCreate()
+Tạo một DataFrame từ dữ liệu ví dụ: df = spark.createDataFrame([(1, 2, 3), (4, 5, 6), (7, 8, 9)], ["col1", "col2", "col3"])
+Tạo một VectorAssembler để trích xuất đặc trưng: assembler = VectorAssembler(inputCols=["col1", "col2"], outputCol="features")
+Áp dụng VectorAssembler vào DataFrame: output = assembler.transform(df)
+Hiển thị kết quả: output.show()
+
+
+3.Persistence Utilities
+Import các module cần thiết:
+
+
+from pyspark.sql import SparkSession
+from pyspark.ml.feature import VectorAssembler
+from pyspark.ml.regression import LinearRegression
+from pyspark.ml.regression import LinearRegressionModel
+
+Tạo một đối tượng SparkSession:
+
+
+spark = SparkSession.builder.appName("Spark MLlib Persistence Demo").getOrCreate()
+
+
+Tạo một DataFrame từ dữ liệu ví dụ:
+
+
+df = spark.createDataFrame([(1, 2, 3), (4, 5, 6), (7, 8, 9)], ["col1", "col2", "col3"])
+
+
+Tạo một VectorAssembler để trích xuất đặc trưng:
+
+
+assembler = VectorAssembler(inputCols=["col1", "col2"], outputCol="features")
+
+
+Áp dụng VectorAssembler vào DataFrame:
+
+
+output = assembler.transform(df)
+
+
+Tạo một mô hình Linear Regression:
+
+
+lr = LinearRegression(featuresCol="features", labelCol="col3")
+model = lr.fit(output)
+
+
+Lưu mô hình vào đĩa:
+
+
+model.save("path/to/save/model")
+
+
+do đã tồn tại từ trước nên sử dụng 
+
+
+model.write().overwrite().save("path/to/save/model")
+
+
+
+
+Tải mô hình từ đĩa:
+
+
+loaded_model = LinearRegressionModel.read().load("path/to/save/model")
+
+
+
+
+Sử dụng mô hình để dự đoán:
+
+
+predictions = loaded_model.transform(output)
+predictions.show()
+
+4.Data Processing Utilities
+Câu lệnh: import pandas as pd
+lưu ý: nếu vẫn chưa cài đặt pandas thì phải cài đặt:
+pip install pandas
+
+
+Mô tả: Câu lệnh này được sử dụng để import thư viện pandas, một thư viện phổ biến trong Python để làm việc với dữ liệu.
+Câu lệnh: data = pd.read_csv('/home/nhom1/data/data.csv')
+Mô tả: Câu lệnh này đọc dữ liệu từ tệp tin CSV có tên là 'data.csv' và lưu nó vào biến data. Điều này giúp bạn đọc và xử lý dữ liệu từ tệp tin CSV trong Python.
+Câu lệnh: data.head()
+Mô tả: Câu lệnh này hiển thị một số dòng đầu tiên của dữ liệu trong DataFrame data. Điều này giúp bạn kiểm tra xem dữ liệu đã được đọc chính xác hay không.
+Câu lệnh: data.info()
+Mô tả: Câu lệnh này hiển thị thông tin tổng quan về dữ liệu trong DataFrame data, bao gồm số lượng dòng và cột, kiểu dữ liệu của các cột và thông tin về bộ nhớ sử dụng.
+Câu lệnh: data.describe()
+Mô tả: Câu lệnh này tính toán các thống kê mô tả cho các cột số trong DataFrame data, bao gồm số lượng, giá trị trung bình, độ lệch chuẩn, giá trị tối thiểu, giá trị trung vị và giá trị tối đa. Điều này giúp bạn có cái nhìn tổng quan về phân phối của dữ liệu.
+Câu lệnh: data['column_name'].unique()
+Mô tả: Câu lệnh này trả về một mảng chứa các giá trị duy nhất trong cột có tên là 'column_name' trong DataFrame data. Điều này giúp bạn kiểm tra các giá trị duy nhất có trong cột.
+Câu lệnh: data['column_name'].value_counts()
+Mô tả: Câu lệnh này đếm số lần xuất hiện của từng giá trị trong cột có tên là 'column_name' trong DataFrame data. Điều này giúp bạn hiểu rõ hơn về phân phối của các giá trị trong cột.
+
